@@ -6,22 +6,22 @@ const CONFIRM = "/confirm-account";
 
 //courses
 const COURSES = "/courses";
-const NEW = "/courses/new";
-const MINE = "/courses/mine";
+const NEW = "/new";
+const MINE = "/mine";
 
 //api
 const API = "/api";
-const DOCUMENTATION = "/api/documentation";
+const DOCUMENTATION = "/documentation";
 
 //v1
 const V1 = "/v1";
-const BUY = "/v1/buy";
-const REFUND = "/v1/refund";
+const BUY = "/buy";
+const REFUND = "/refund";
 
 //v2
 const V2 = "/v2";
-const REMOVE = "/v2/remove";
-const EDIT = "/v2/edit";
+const REMOVE = "/remove";
+const EDIT = "/edit";
 
 const routes = {
   home: HOME,
