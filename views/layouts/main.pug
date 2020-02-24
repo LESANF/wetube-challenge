@@ -1,9 +1,7 @@
 doctype html
 html
-    head
-        title #{siteName} | #{pageTitle}
+    include ../partials/head.pug
     body
-        include ../partials/header.pug
         main
             block content
         include ../partials/footer.pug
