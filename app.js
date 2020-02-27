@@ -1,18 +1,11 @@
 import express from "express";
-
-import globalRouter from "./routers/globalRouter";
-import apiRouter from "./routers/apiRouter";
-import coursesRouter from "./routers/coursesRouter";
-import v1Router from "./routers/v1Router";
-import v2Router from "./routers/v2Router";
-import routes from "./routes";
+import path from "path";
+import "./db";
+import movieRouter from "./routers/movieRouter";
 
 const app = express();
 
-app.use(routes.home, globalRouter);
-app.use(routes.courses, coursesRouter);
-app.use(routes.api, apiRouter);
-app.use(routes.v1, v1Router);
-app.use(routes.v2, v2Router);
+app.set("view engine", "pug");
+app.use("/", movieRouter);
 
 export default app;
