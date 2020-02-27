@@ -7,10 +7,17 @@ import {
 
 export const home = async (req, res) => {
   const movies = await getMovies();
-  res.render("home", { movies });
+  res.render("home", { pagetitle: "movies !", movies });
 };
-export const movieDetail = (req, res) => {
-  res.render("movieDetail");
+
+export const movieDetail = async (req, res) => {
+  const {
+    params: { id }
+  } = req;
+
+  const detail = await getMovieById(id);
+
+  res.render("movieDetail", { detail });
 };
 export const filterMovie = (req, res) => {
   res.render("filterMovie");

@@ -1,4 +1,10 @@
 extends layouts/main.pug
 
 block content
-    p movieDetail
+   .movie__detail
+        h1=detail.title
+        h4=detail.summary
+        ul
+            each item in detail.genres
+                li
+                    span=item

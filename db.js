@@ -13,7 +13,7 @@ const startDB = async () => {
       data: {
         data: { movies }
       }
-    } = await client.get("/list_movies.json", { params: { limit: 5 } }));
+    } = await client.get("/list_movies.json", { params: { limit: 50 } }));
     console.log("✅  Movie DB Ready!");
   } catch (e) {
     console.log(e.message);
