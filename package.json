@@ -12,7 +12,10 @@
     "@babel/core": "^7.8.4",
     "@babel/node": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
+<<<<<<< HEAD
     "axios": "^0.19.2",
+=======
+>>>>>>> eb81f6b41c2bf1e52c745311aff183dadc19a888
     "express": "^4.17.1",
     "pug": "^2.0.4"
   },
