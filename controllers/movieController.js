@@ -6,18 +6,24 @@ import {
 } from "../db";
 
 export const home = async (req, res) => {
-  const movies = await getMovies();
-  res.render("home", { pagetitle: "movies !", movies });
+  try {
+    const movies = await getMovies();
+    res.render("home", { pagetitle: "movies !", movies });
+  } catch (error) {
+    res.render("errorPage", { pagetitle: "ERROR PAGE" });
+  }
 };
 
 export const movieDetail = async (req, res) => {
   const {
     params: { id }
   } = req;
-
-  const detail = await getMovieById(id);
-
-  res.render("movieDetail", { pagetitle: detail.title, detail });
+  try {
+    const detail = await getMovieById(id);
+    res.render("movieDetail", { pagetitle: detail.title, detail });
+  } catch (error) {
+    res.render("errorPage", { pagetitle: "ERROR PAGE" });
+  }
 };
 
 export const filterMovie = async (req, res) => {
@@ -35,14 +41,13 @@ export const filterMovie = async (req, res) => {
 
   if (checkYearBoolean) {
     if (parseYear < 2021 && Number.isInteger(parseYear)) {
-      console.log(Number.isInteger(parseYear));
       const movies = await getMovieByMinimumYear(parseYear);
       res.render("home", {
         pagetitle: `Searching by year: ${parseYear}`,
         movies
       });
     } else {
-      res.render("errorPage");
+      res.render("errorPage", { pagetitle: "ERROR PAGE" });
     }
   } else if (checkRatingBoolean) {
     if (parseRating <= 10) {
@@ -52,9 +57,9 @@ export const filterMovie = async (req, res) => {
         movies
       });
     } else {
-      res.render("errorPage");
+      res.render("errorPage", { pagetitle: "ERROR PAGE" });
     }
   } else {
-    res.render("errorPage");
+    res.render("errorPage", { pagetitle: "ERROR PAGE" });
   }
 };
