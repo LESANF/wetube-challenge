@@ -1,12 +1,15 @@
 import express from "express";
 import path from "path";
 import "./db";
-import movieRouter from "./routers/movieRouter";
-import { localsMiddleware } from "./localsMiddleware";
+import bodyParser from "body-parser";
+import movieRouter from "./movieRouter";
+import { localsMiddleware } from "./middlewares";
 
 const app = express();
 
 app.set("view engine", "pug");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(localsMiddleware);
 app.use("/", movieRouter);
