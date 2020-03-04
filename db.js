@@ -1,29 +1,18 @@
-// DONT TOUCH THIS FILE <3
+import mongoose from "mongoose";
 
-import axios from "axios";
-let movies = [];
-const YIFY_URL = "https://yts.mx/api/v2/list_movies.json";
-const client = axios.create({
-  baseURL: YIFY_URL
+mongoose.connect("mongodb://localhost:27017/Youtube", {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true
 });
-const startDB = async () => {
-  try {
-    console.log("⏳  Starting Movie DB");
-    ({
-      data: {
-        data: { movies }
-      }
-    } = await client.get("/list_movies.json", { params: { limit: 50 } }));
-    console.log("✅  Movie DB Ready!");
-  } catch (e) {
-    console.log(e.message);
-    console.log("❌ Can't initialize DB, contact Nico");
-  }
-};
-startDB();
 
-// This gives you an array of all the movies
-export const getMovies = () => movies;
+const db = mongoose.connection;
+
+const handleOpen = () => console.log("✅  Connected to DB !!!");
+const handleError = error => console.log(`❌ Error on DB Connection:${error}`);
+
+db.once("open", handleOpen);
+db.on("error", handleError);
 
 // This gives you one movie, don't forget to pass the ID
 export const getMovieById = id => {
