@@ -6,7 +6,6 @@ export const home = async (req, res) => {
     const movies = await Moive.find({});
     res.render("movies", { pageTitle: "Home", movies });
   } catch (error) {
-    console.log(error);
     res.render("movies", { pageTitle: "Home", movies: [] });
   }
 };
@@ -28,18 +27,20 @@ export const postCreateMovie = async (req, res) => {
   try {
     const genresAry = genres.split(",");
 
-    const newMovie = await Moive.create({
-      title,
-      year,
-      rating,
-      synopsis,
-      genres: genresAry
-    });
-
-    console.log(newMovie.id);
-    res.redirect(`/${newMovie.id}`);
+    if (title.length < 3) {
+      res.redirect("/create");
+    } else {
+      const newMovie = await Moive.create({
+        title,
+        year,
+        rating,
+        synopsis,
+        genres: genresAry
+      });
+      res.redirect(`/${newMovie.id}`);
+    }
   } catch (error) {
-    console.log(error);
+    res.render("404", { pageTitle: "ERROR PAGE !" });
   }
 };
 
@@ -51,11 +52,11 @@ export const movieDetail = async (req, res) => {
   try {
     const movie = await Moive.findById(id);
     if (!movie) {
-      res.render("404", { pageTitle: "Movie not found" });
+      res.render("404", { pageTitle: "ERROR PAGE !" });
     }
     return res.render("detail", { movie, pageTitle: movie.title });
   } catch (error) {
-    console.log(error);
+    res.render("404", { pageTitle: "ERROR PAGE !" });
   }
 };
 
@@ -73,19 +74,64 @@ export const search = async (req, res) => {
       res.render("search", {
         movies,
         searchObj: "rating",
-        value: getRating
+        value: getRating,
+        pageTitle: `Filtering by rating: ${getRating}`
       });
     } else {
-      res.render("404");
+      res.render("404", { pageTitle: "ERROR PAGE !" });
     }
   } else if (checkYearBoolean === true) {
     if (isNaN(getYear) === false && getYear <= 2020) {
       const movies = await Moive.find({ year: { $gte: getYear } });
-      res.render("search", { movies, searchObj: "year", value: getYear });
+      res.render("search", {
+        movies,
+        searchObj: "year",
+        value: getYear,
+        pageTitle: `Filtering by rating: ${getYear}`
+      });
     } else {
-      res.render("404");
+      res.render("404", { pageTitle: "ERROR PAGE !" });
     }
   } else {
-    res.render("404");
+    res.render("404", { pageTitle: "ERROR PAGE !" });
   }
+};
+
+export const getMovieEdit = async (req, res) => {
+  const {
+    params: { id }
+  } = req;
+
+  const movie = await Moive.findById(id);
+  const genres = movie.genres.toString();
+
+  res.render("edit", { movie, pageTitle: movie.title, genres });
+};
+
+export const postMovieEdit = async (req, res) => {
+  const {
+    params: { id },
+    body: { title, year, rating, synopsis, genres }
+  } = req;
+  try {
+    await Moive.findOneAndUpdate(
+      { _id: id },
+      { title, year, rating, synopsis, genres }
+    );
+    res.redirect(`/${id}`);
+  } catch (error) {
+    res.render("404", { pageTitle: "ERROR PAGE !" });
+  }
+};
+
+export const deleteMovie = async (req, res) => {
+  const {
+    params: { id }
+  } = req;
+  try {
+    await Moive.findOneAndRemove({ _id: id });
+  } catch (error) {
+    res.render("404", { pageTitle: "ERROR PAGE !" });
+  }
+  res.redirect("/");
 };
