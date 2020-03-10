@@ -7,23 +7,20 @@ import {
   search,
   getMovieEdit,
   postMovieEdit,
-  deleteMovie
+  deleteMovie,
+  test,
+  getTest,
+  getUpload,
+  postUpload
 } from "./movieController";
+
+import { uploadText } from "./middlewares";
 
 const movieRouter = express.Router();
 
 movieRouter.get("/", home);
 
-movieRouter.get("/create", getCreateMovie);
-movieRouter.post("/create", postCreateMovie);
-
-movieRouter.get("/search", search);
-
-movieRouter.get("/:id", movieDetail);
-
-movieRouter.get("/:id/edit", getMovieEdit);
-movieRouter.post("/:id/edit", postMovieEdit);
-
-movieRouter.get("/:id/delete", deleteMovie);
+movieRouter.get("/read", getUpload);
+movieRouter.post("/read", uploadText, postUpload);
 
 export default movieRouter;

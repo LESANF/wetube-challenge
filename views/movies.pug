@@ -1,7 +1,6 @@
 extends templates/layout
-include mixins/movie
 
 block content
-  h1=pageTitle
-  each movie in movies
-    +movieMixin(movie)
+    form(action="/read", method="post", enctype="multipart/form-data")
+        input(type="file", id="file", name="textFile", required=true)
+        input(type="submit", value="Upload")

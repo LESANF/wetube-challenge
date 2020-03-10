@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
-import "./db";
+import multer from "multer";
+import fs from "fs";
 import bodyParser from "body-parser";
 import movieRouter from "./movieRouter";
 import { localsMiddleware } from "./middlewares";

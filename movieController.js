@@ -1,19 +1,28 @@
 import Movie from "./models/Movie";
 import { addMovie } from "./db";
+import fs from "fs";
 
-export const home = async (req, res) => {
-  try {
-    const movies = await Movie.find({});
-    res.render("movies", { pageTitle: "Home", movies });
-  } catch (error) {
-    res.render("movies", { pageTitle: "Home", movies: [] });
-  }
+export const home = (req, res) => {
+  res.render("movies");
 };
 
 /*
 Write the controller or controllers you need to render the form
 and to handle the submission
 */
+
+export const getUpload = (req, res) =>
+  res.render("read", { pageTitle: "Upload" });
+
+export const postUpload = async (req, res) => {
+  const {
+    file: { path }
+  } = req;
+  const read = await fs.readFile(path, "utf-8", (err, data) => {
+    const content = data;
+    res.render("read", { data });
+  });
+};
 
 export const getCreateMovie = (req, res) => {
   res.render("create", { pageTitle: "Create" });
