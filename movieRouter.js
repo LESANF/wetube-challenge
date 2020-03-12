@@ -20,7 +20,4 @@ const movieRouter = express.Router();
 
 movieRouter.get("/", home);
 
-movieRouter.get("/read", getUpload);
-movieRouter.post("/read", uploadText, postUpload);
-
 export default movieRouter;

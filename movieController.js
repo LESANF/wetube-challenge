@@ -1,6 +1,7 @@
 import Movie from "./models/Movie";
 import { addMovie } from "./db";
 import fs from "fs";
+import request from "request";
 
 export const home = (req, res) => {
   res.render("movies");
