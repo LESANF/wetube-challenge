@@ -4,7 +4,20 @@ import fs from "fs";
 import request from "request";
 
 export const home = (req, res) => {
-  res.render("movies");
+  request(
+    {
+      url: "https://nomadcodesrs.co/"
+    },
+    function(err, response, html) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+
+      console.log("received server data:");
+      console.log(html);
+    }
+  );
 };
 
 /*
