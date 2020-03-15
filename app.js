@@ -18,19 +18,17 @@ const test = {
   b: "down!"
 };
 
-const b = "kimminsu";
-const c = "hansueng";
-
 app.get("/", (req, res) => {
   const checkUrl = req.url.split("=")[1];
-  console.log(checkUrl);
 
   if (checkUrl) {
     request(`https://${checkUrl}`, function(error, response, body) {
       if (response && response.statusCode <= 445) {
-        res.send(b);
+        console.log(response.statusCode);
+        res.send(test.a);
       } else if (error) {
-        res.json(c);
+        console.log(response);
+        res.json(test.b);
       }
     });
   } else {
