@@ -21,6 +21,8 @@ const test = {
 app.get("/", (req, res) => {
   const checkUrl = req.url.split("=")[1];
 
+  // END
+
   if (checkUrl) {
     request(`https://${checkUrl}`, function(error, response, body) {
       if (response && response.statusCode <= 445) {
